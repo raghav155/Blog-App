@@ -1,0 +1,51 @@
+*{
+    margin:0;
+    padding:0;
+}
+html,body{
+    font-family: Ubuntu,"Fira Code",'SansSerif';
+    line-height:1.6;
+    letter-spacing:1px;
+}
+.alert{
+    display: none;
+}
+#newblgbtn:hover{
+    cursor: pointer;
+}
+.carousel-self{
+    display: grid;
+    grid-template-columns: 1fr 7fr 1fr;
+}
+.arrow-left{
+    position: relative;
+    z-index: 100;
+    top:160px;
+    left:139px;
+    cursor: pointer;
+}
+.arrow-right{
+    position: relative;
+    z-index: 100;
+    top:160px;
+    right:46px;
+    cursor: pointer;
+}
+
+.img-content{
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

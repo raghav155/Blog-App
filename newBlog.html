@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LiveBlogFirebase</title>
+    <link rel="stylesheet" href="./css/animate.css">
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/custom.css">
+</head>
+<body>
+<div style="padding: 0;" class="container-fluid">
+    <nav style="height: 70px;" class="navbar navbar-dark bg-dark justify-content-between">
+        <a href="index.html" style="color: white;font-size: 22px;" class="navbar-brand">Live Blog
+            <i class="fa fa-rss" aria-hidden="true"></i>
+        </a>
+        <form class="form-inline">
+            <button id="newblgbtn" style="margin-right: 10px" class="btn btn-outline-danger my-2 my-sm-0" >New blog</button>
+            <button id="signupbtn" style="margin-right: 10px" class="btn btn-outline-success my-2 my-sm-0" >Sign Up</button>
+            <button id="loginbtn" class="btn btn-outline-info my-2 my-sm-0" >Login</button>
+        </form>
+    </nav>
+    <div style="width: 60%;position:relative;top: 40px;" class="alert alert-success container animated slideInUp" role="alert">
+        This is a success alert—check it out!
+    </div>
+
+<div style="background-color: #e7ebef;margin-top: 90px;width: 60%;padding: 20px;border-radius: 20px" class="container">
+    <form id="newblog">
+        <div class="form-group">
+            <label>Image Source</label>
+            <input id="img-src" type="text" class="form-control"  placeholder="Enter Source">
+            <small id="emailHelp" class="form-text text-muted">Enter the source of the image in correct resolution.</small>
+        </div>
+        <div class="form-group">
+            <label>Blog Title</label>
+            <input id="blogtitle" type="text" class="form-control"  placeholder="Title">
+        </div>
+
+        <div class="form-group">
+            <label>Blog-Content</label>
+            <textarea id="blogcontent" class="form-control" placeholder="Enter Blog Content..." rows="6"></textarea>
+        </div>
+
+        <button  type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+<script src="./js/jquery.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script src="./js/script.js"></script>
+
+
+</body>
+</html>

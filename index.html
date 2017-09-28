@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LiveBlogFirebase</title>
+    <link rel="stylesheet" href="./css/animate.css">
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/custom.css">
+</head>
+<body>
+<div style="padding: 0;" class="container-fluid">
+<nav style="height: 70px;" class="navbar navbar-dark bg-dark justify-content-between">
+    <a style="color: white;font-size: 22px;" class="navbar-brand">Live Blog
+        <i class="fa fa-rss" aria-hidden="true"></i>
+    </a>
+    <form class="form-inline">
+        <button id="newblgbtn" style="margin-right: 10px" class="btn btn-outline-danger my-2 my-sm-0" >New blog</button>
+        <button id="signupbtn" style="margin-right: 10px" class="btn btn-outline-success my-2 my-sm-0" >Sign Up</button>
+        <button id="loginbtn" class="btn btn-outline-info my-2 my-sm-0" >Login</button>
+    </form>
+</nav>
+
+    <div style="height: 400px;margin-top: 70px;margin-bottom: 50px" class="container-fluid">
+        <div style="height: 100%;" class="carousel-self">
+            <div style="height: 100%;">
+                <img class="arrow-left" src="./arrow-left.png" alt="arrowleft">
+            </div>
+            <div class="img-content">
+                <div>
+                    <img id="imgdisplay" height="400px" width="628px" src="" alt="">
+                </div>
+                <div >
+                    <div class="card text-center" style="width: 23rem;height: 100%;border: none">
+                        <div style="color: white;background-color: grey" class="card-body">
+                            <h4 style="text-transform: capitalize" class="card-title"></h4>
+                            <h6 class="card-subtitle mb-2 text-muted"></h6>
+                            <p class="card-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 100%;">
+                <img class="arrow-right" src="./arrow-right.png" alt="arrowright">
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 83%;" class="container">
+        <div id="content" style="padding: 20px;" class="row">
+            <!--<div style="margin-bottom: 40px" class="col col-4">-->
+                <!--<div class="card" style="width: 20rem;padding: 20px">-->
+                    <!--<img height="200px" class="card-img-top" src="http://www.timeoutdubai.com/images/content/73463/2016_3_img_base.jpg" alt="Card image cap">-->
+                    <!--<div class="card-body text-center">-->
+                        <!--<h4 class="card-title">Card title</h4>-->
+                        <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+                        <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+<script src="./js/jquery.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script src="./js/script.js"></script>
+</body>
+</html>
