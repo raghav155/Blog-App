@@ -37,7 +37,17 @@ html,body{
     grid-template-columns: 1.8fr 1fr;
 }
 
-
+#customM{
+    display: none;
+    padding: 30px;
+    margin: 0 auto;
+    width: 60%;
+    position: relative;
+    background-color: white;
+    top: 100px;
+    border-radius: 10px;
+    margin-bottom: 150px;
+}
 
 
 

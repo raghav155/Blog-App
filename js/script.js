@@ -17,7 +17,7 @@ $(document).ready(function () {
     $('#newblog').on('submit',(e) => {
         e.preventDefault();
        let blog = new Promise(function (resolve,reject) {
-           $('.alert').css({
+           $('#alert1').css({
                'display' : 'none'
            });
            newBlog();
@@ -26,9 +26,9 @@ $(document).ready(function () {
 
        blog.then(function () {
            $('#newblog').trigger("reset");
-           $('.alert').css('display','block');
+           $('#alert1').css('display','block');
            setTimeout(function () {
-               $('.alert').css('display','none');
+               $('#alert1').css('display','none');
            },3000);
        }).catch(function () {
            console.log('err');
@@ -197,6 +197,7 @@ $(document).ready(function () {
             $('.full-article').on('click',function () {
                 let id = $(this).attr('val');
                 sessionStorage.setItem('key',allblogs[+id]);
+                sessionStorage.setItem('id',id);
                 window.location = 'article.html';
             });
         }).catch(function () {
@@ -316,8 +317,10 @@ function appendContent(key,id) {
 
 function EditDeleteBlog(key) {
 
+    let view = '';
     let output = '';
 
+    let ref = firebase.database().ref('/Blogs/' + key + '/views');
     let ref1 = blogs.child(key).child('imgsource');
     let ref2 = blogs.child(key).child('blogtitle');
     let ref3 = blogs.child(key).child('blogcontent');
@@ -342,7 +345,16 @@ function EditDeleteBlog(key) {
     });
     ref4.on("value",function (snapshot) {
         viewsval = snapshot.val();
+        view = snapshot.val();
+       
     });
+   
+    setTimeout(function(){
+        view++;
+        ref.set(view);
+    },2000);
+    
+
 
 
 
@@ -355,13 +367,109 @@ function EditDeleteBlog(key) {
                 <h1 style="font-weight: 600;text-transform: capitalize">${titleval}</h1>
                 <p>${contentval}</p>
                 <span style="display: block;">Views : ${viewsval}</span>
-                <a  href="#" class="btn btn-success ">Edit Blog</a>
-                <a  href="#" class="btn btn-danger ">Delete Blog</a>
+                <a id='editbtn' href="#" class="btn btn-success ">Edit Blog</a>
+                <a id='deletebtn' href="#" class="btn btn-danger ">Delete Blog</a>
             </div>
         </div>
     `;
 
         $('#articleED').html(output);
+        $('#deletebtn').on('click',function(){
+            let alrt = confirm('Are you Sure To Delete This Blog');
+            if(alrt == true){
+                deleteBlog(key);
+            };
+        });
+        $('#editbtn').on('click',function(){
+            editBlog(key);
+
+          
+                $('#articleback2').css({
+                    'display' : 'none'
+                });
+                $('#articleback').css({
+                    'background-color':'rgba(0,0,0,.7)',
+                    'height' : '800px'
+                });
+                $('#customM').css('display','block');
+                $('#customM').addClass('slideInDown')
+    
+                $('#cancel').on('click',function(){
+                    setTimeout(function(){
+                        $('#articleback2').css({
+                            'display' : 'block'
+                        });
+                        $('#articleback').css({
+                            'background-color':'white',
+                        });
+                        $('#customM').css('display','none');
+                    },800);
+                    $('#customM').removeClass('slideInDown')
+                    $('#customM').addClass('slideOutUp')
+    
+                });
+            
+        
+
+        });
+
     },3000);
 
+}
+
+function deleteBlog(key){
+    let id = sessionStorage.getItem('id');
+
+    let ref = firebase.database().ref('/Blogs/' + key);
+    ref.remove();
+    allblogs.splice(id,1);
+    window.location = 'index.html';
+}
+function editBlog(key){
+    let ref1 = blogs.child(key).child('imgsource');
+    let ref2 = blogs.child(key).child('blogtitle');
+    let ref3 = blogs.child(key).child('blogcontent');
+
+    let imgval = '';
+    let blogtitle = '';
+    let blogcontent = '';
+    ref1.on('value',function(snapshot){
+        imgval  = snapshot.val();
+    });
+    ref2.on('value',function(snapshot){
+        blogtitle  = snapshot.val();
+    });
+    ref3.on('value',function(snapshot){
+        blogcontent  = snapshot.val();
+    });
+
+      document.getElementById('src2').value = imgval;
+      document.getElementById('blogtitle2').value = blogtitle;
+      document.getElementById('blogcontent2').value = blogcontent;
+
+      $('#submitEB').on('click',function(){
+       let ival =  document.getElementById('src2').value ;
+       let tval = document.getElementById('blogtitle2').value ;
+       let cval = document.getElementById('blogcontent2').value ;
+
+       let ref = firebase.database().ref('/Blogs/' + key + '/views');
+
+       let reff1 = firebase.database().ref('/Blogs/' + key + '/imgsource');
+       let reff2 = firebase.database().ref('/Blogs/' + key + '/blogtitle');
+       let reff3 = firebase.database().ref('/Blogs/' + key + '/blogcontent');
+
+       reff1.set(ival);
+       reff2.set(tval);
+       reff3.set(cval);
+
+    //    $('#updateBlog').trigger('reset');
+    //    $('#alert2').css('display','block');
+
+    //    setTimeout(function(){
+
+    //    })
+       window.location = 'index.html';
+       return false;
+      });
+    
 }
