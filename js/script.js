@@ -12,8 +12,13 @@ var blogs = firebase.database().ref('Blogs/');
 var allblogs = [];
 var index = 0;
 
+var user ;
+
 
 $(document).ready(function () {
+
+   // console.log(firebase.auth().currentUser);
+
     $('#newblog').on('submit',(e) => {
         e.preventDefault();
        let blog = new Promise(function (resolve,reject) {
@@ -35,11 +40,24 @@ $(document).ready(function () {
        });
     });
 
-    $('#newblgbtn').on('click',() => {
-        window.location = 'newBlog.html';
-        return false;
+    $('.newblgbtn').on('click',(e) => {
+        e.preventDefault();
+        
+         window.location = 'newBlog.html';
+            
+        
     });
     if(window.location.pathname === '/index.html') {
+       
+        setTimeout(function(){
+            user = firebase.auth().currentUser;
+            console.log(user);
+
+            togglebuttons();
+
+            
+        },1000);
+
         let fetchData = new Promise(function (resolve, reject) {
             fetchAllData();
             setTimeout(function () {
@@ -197,12 +215,14 @@ $(document).ready(function () {
             $('.full-article').on('click',function () {
                 let id = $(this).attr('val');
                 sessionStorage.setItem('key',allblogs[+id]);
+                // sessionStorage.setItem('user',user);
                 sessionStorage.setItem('id',id);
                 window.location = 'article.html';
             });
         }).catch(function () {
            console.log('errr');
         });
+
 
     }
 
@@ -217,10 +237,109 @@ $(document).ready(function () {
     //    console.log('errr');
     // });
     if(window.location.pathname === '/article.html'){
-        let key = sessionStorage.getItem('key');
-        console.log('uppp');
-        EditDeleteBlog(key);
+
+        setTimeout(function(){
+            user = firebase.auth().currentUser;
+            togglebuttons();
+            let key = sessionStorage.getItem('key');
+            // console.log('uppp');
+            EditDeleteBlog(key);
+        },1000);
+        
+        // let key = sessionStorage.getItem('key');
+        // // console.log('uppp');
+        // EditDeleteBlog(key);
     }
+    $('.signupbtn').on('click',function(e){
+        e.preventDefault();
+        window.location = 'Signupform.html';
+            // togglebuttons();
+        
+    });
+
+    $('#signupformbtn').on('click',function(e){
+        e.preventDefault();
+        let email = $('#emailip').val();
+        let password = $('#passwordip').val();
+
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(function(){
+            $('#customalert').addClass('slideInUp');
+            $('#customalert').css('display','block');
+            $('#signupform').trigger('reset');
+
+            setTimeout(function(){
+                $('#customalert').removeClass('slideInUp');
+                $('#customalert').css('display','none');
+                 user = firebase.auth().currentUser;
+                 console.log(user);
+                window.location = 'index.html';
+                return false;
+            },2000)
+        })
+        .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode == 'auth/weak-password') {
+            alert('The password is too weak.');
+        } else {
+            alert(errorMessage);
+        }
+        console.log(error);
+    });
+       
+    });
+
+    $('.signout').on('click',function(e){
+        e.preventDefault();
+        firebase.auth().signOut().then(function() {
+            console.log('signedout')
+          }).catch(function(error) {
+            // An error happened.
+            console.log('errrr')
+          });
+
+          setTimeout(function(){
+            location.reload();
+          },2000)
+    });
+
+    $('.loginbtn').on('click',function(e){
+        e.preventDefault();
+        window.location = 'login.html';
+    });
+
+
+    $('#loginformbtn').on('click',function(e){
+        e.preventDefault();
+        let email = $('#emailip').val();
+        let password = $('#passwordip').val();
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(function(){
+              $('#loginform').trigger('reset');
+        
+             setTimeout(function(){
+                   user = firebase.auth().currentUser;
+                   console.log(user);
+                   window.location = 'index.html';
+                    return false;
+             },2000)
+        })
+            .catch(function(error) {
+        // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorCode === 'auth/wrong-password') {
+                alert('Wrong password.');
+            } else {
+                alert(errorMessage);
+            }
+            console.log(error);
+        });
+       
+    });
 
     
 });
@@ -472,4 +591,21 @@ function editBlog(key){
        return false;
       });
     
+}
+
+function togglebuttons(){
+    console.log(user)
+    if(user != null){
+        $('.newblgbtn').css('display','block');
+        $('.signupbtn').css('display','none');
+        $('.loginbtn').css('display','none');
+        $('.signout').css('display','block');
+        // $('#submitEB').css('display','block');
+        // $('#cancel').css('display','block');
+    }else{
+        $('.newblgbtn').css('display','none');
+        $('.signupbtn').css('display','block');
+        $('.loginbtn').css('display','block');
+        $('.signout').css('display','none');
+    }
 }
